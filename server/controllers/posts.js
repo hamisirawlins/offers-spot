@@ -25,27 +25,43 @@ export const updatePost = async (req, res) => {
   const post = req.body;
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("No Post with that ID");
-  const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post,_id}, {
+  const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, {
     new: true,
   });
   res.json(updatedPost);
 };
 
-export const deletePost = async (req,res) =>{
-  const {id}= req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("No Post with that ID");
-    
-  await PostMessage.findByIdAndRemove(id);
-  res.json({message:'Post deleted successfully'});
-}
-
-export const likePost = async (req,res)=>{
+export const deletePost = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("No Post with that ID");
-  
-    const post = await PostMessage.findById(id);
-    const updatedPost = await PostMessage.findByIdAndUpdate(id,{likes:post.likes + 1},{new:true})
-    res.json(updatedPost);
+
+  await PostMessage.findByIdAndRemove(id);
+  res.json({ message: 'Post deleted successfully' });
+}
+
+export const likePost = async (req, res) => {
+  const { id } = req.params;
+
+  //Check User Authentication Before Like
+  if (!req.userId) return res.json({message:"Unauthenticated"});
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("No Post with that ID");
+
+  const post = await PostMessage.findById(id);
+
+  //Check if User Already Liked 
+  const index = post.likes.findIndex((id)=>id ===String(req.userId));
+
+
+  if (index=== -1) {
+    //Like the Post
+    post.likes.push(req.userId); 
+  } else {
+    //Dislike the Post
+    post.likes= post.likes.filter((id)=>id!==String(req.userId));
+  }
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true })
+  res.json(updatedPost);
 }
