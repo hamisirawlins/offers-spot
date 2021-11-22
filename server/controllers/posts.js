@@ -1,5 +1,7 @@
 import PostMessage from "../models/postMessage.js";
 import mongoose from 'mongoose';
+
+
 export const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMessage.find();
@@ -11,7 +13,7 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
-  const newPost = new PostMessage(post);
+  const newPost = new PostMessage({...post,creator:req.userId,createdAt:new Date().toISOString()});
   try {
     await newPost.save();
     res.status(201).json(newPost);
@@ -63,5 +65,5 @@ export const likePost = async (req, res) => {
     post.likes= post.likes.filter((id)=>id!==String(req.userId));
   }
   const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true })
-  res.json(updatedPost);
+  res.status(200).json(updatedPost);
 }
