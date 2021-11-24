@@ -21,7 +21,9 @@ const Navbar = () => {
     
     useEffect(() => {
         // Logout Expired Users
-        const token = user?.token;
+
+        /*eslint-disable */
+        const token = user?.token; 
         if (token) {
             const decodedToken = decode(token);
             if (decodedToken.exp * 1000 < new Date().getTime())
@@ -30,6 +32,7 @@ const Navbar = () => {
 
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [logout,location]);
+        /*eslint-enable */
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
