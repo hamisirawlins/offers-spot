@@ -9,6 +9,8 @@ const reducer = (posts=[], action) => {
         return [...posts,action.payload];
     case 'DELETE':
         return posts.filter((post)=>post._id!== action.payload);
+    case 'FETCH_BY_SEARCH':
+        return action.payload;
     default:
       return posts;
   }
