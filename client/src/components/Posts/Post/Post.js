@@ -7,6 +7,7 @@ import {
   CardMedia,
   Button,
   Typography,
+  Link
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
@@ -60,7 +61,9 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </div>
       <CardContent><Typography className={classes.title} variant="body2" component="p" gutterBottom>{post.description}</Typography></CardContent>
-      <Typography className={classes.title} variant="body2" color="textSecondary">{post.link}</Typography>
+      <Link href={post.link} underline="none" className={classes.title} variant="body2" color="textSecondary" rel="noopener noreferrer" target="_blank">
+        Checkout The Offer
+      </Link>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
           <Likes />
