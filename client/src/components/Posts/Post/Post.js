@@ -61,7 +61,7 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </div>
       <CardContent><Typography className={classes.title} variant="body2" component="p" gutterBottom>{post.description}</Typography></CardContent>
-      <Link href={post.link} underline="none" className={classes.title} variant="body2" color="textSecondary" rel="noopener noreferrer" target="_blank">
+      <Link href={post.link} underline="none" className={classes.title} variant="body2" color="blue" rel="noopener noreferrer" target="_blank">
         Checkout The Offer
       </Link>
       <CardActions className={classes.cardActions}>
