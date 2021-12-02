@@ -16,6 +16,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const query = useQuery();
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const searchQuery = query.get('searchQuery');
 
   const classes = useStyles();
