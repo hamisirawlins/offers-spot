@@ -15,7 +15,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
         dispatch({ type: 'AUTH', data });
         navigate('/');
     } catch (error) {
-        notify(error['message'])
+        notify('Login Failure,Please provide the correct details')
     }
 };
 
@@ -25,6 +25,6 @@ export const signup = (formData, navigate) => async (dispatch) => {
         dispatch({ type: 'AUTH', data });
         navigate('/');
     } catch (error) {
-        console.log(error)
+        notify('Sign Up Failure, Please confirm your details')
     }
 };

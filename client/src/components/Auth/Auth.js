@@ -4,12 +4,21 @@ import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useStyles from './styles';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {signin, signup} from '../../actions/auth';
 import Input from './Input';
 import Icon from './icon';
 
 const initState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
+
+toast.configure();
+
+const notify = (msg) => {
+    toast(msg)
+};
+
 
 const Auth = () => {
     const classes = useStyles();
@@ -24,11 +33,11 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (isSignUp){
-            dispatch(signup(formData, navigate))
-        } else {
-            dispatch(signin(formData, navigate));
-        }
+            if (isSignUp){
+                dispatch(signup(formData, navigate))
+            } else {
+                dispatch(signin(formData, navigate));
+            }
     };
 
     const handleChange = (e) => {
@@ -48,7 +57,7 @@ const Auth = () => {
     };
     const googleFailure = (error) => {
         console.log(error)
-        console.log('Google Sign In was unsuccessful, Retry later');
+        notify('Google Sign In was unsuccessful, Retry later');
     };
 
     const switchMode = () => {
